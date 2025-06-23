@@ -1,11 +1,17 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-#pragma region imgui
-#include "imgui.h"
-#include "imgui-SFML.h"
-#include "imguiThemes.h"
-#pragma endregion
+// #pragma region imgui
+// #include "imgui.h"
+// #include "imgui-SFML.h"
+// #include "imguiThemes.h"
+// #pragma endregion
+
+
+class graph{
+
+
+};
 
 
 //if you want to load OpenGL
@@ -16,6 +22,7 @@ int main()
 {
 	sf::RenderWindow window(sf::VideoMode(500, 500), "SFML works!");
 
+	sf::Vertex point(sf::Vector2f(400, 300), sf::Color::Red);
 
 
 
@@ -33,7 +40,7 @@ int main()
 	//}
 	//enableReportGlErrors();
 
-
+/* 
 #pragma region imgui
 	ImGui::SFML::Init(window);
 	//you can use whatever imgui theme you like!
@@ -55,7 +62,7 @@ int main()
 	//style.Colors[ImGuiCol_DockingEmptyBg].w = 0.f;
 #pragma endregion
 
-
+ */
 
 	sf::CircleShape shape(100.f);
 	//window.setVerticalSyncEnabled(true);
@@ -71,7 +78,7 @@ int main()
 		{
 			
 		#pragma region imgui
-			ImGui::SFML::ProcessEvent(window, event);
+			// ImGui::SFML::ProcessEvent(window, event);
 		#pragma endregion
 
 
@@ -94,19 +101,19 @@ int main()
 		deltaTimeSeconds = std::max(deltaTimeSeconds, 0.f);
 
 	#pragma region imgui
-		ImGui::SFML::Update(window, deltaTime);
+		// ImGui::SFML::Update(window, deltaTime);
 
-		ImGui::PushStyleColor(ImGuiCol_WindowBg, {});
-		ImGui::PushStyleColor(ImGuiCol_DockingEmptyBg, {});
-		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
-		ImGui::PopStyleColor(2);
+		// ImGui::PushStyleColor(ImGuiCol_WindowBg, {});
+		// ImGui::PushStyleColor(ImGuiCol_DockingEmptyBg, {});
+		// ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
+		// ImGui::PopStyleColor(2);
 	#pragma endregion
 
 
-		ImGui::Begin("Hello, world!");
-		ImGui::Button("Look at this pretty button!");
-		ImGui::Text("Hello!");
-		ImGui::End();
+		// ImGui::Begin("Hello, world!");
+		// ImGui::Button("Look at this pretty button!");
+		// ImGui::Text("Hello!");
+		// ImGui::End();
 
 		//game code....
 		window.clear();
@@ -114,14 +121,14 @@ int main()
 
 
 	#pragma region imgui
-		ImGui::SFML::Render(window);
+		// ImGui::SFML::Render(window);
 	#pragma endregion
 
 		window.display();
 	}
 
 #pragma region imgui
-	ImGui::SFML::Shutdown();
+	// ImGui::SFML::Shutdown();
 #pragma endregion
 
 	return 0;

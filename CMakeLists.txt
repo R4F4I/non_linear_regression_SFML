@@ -1,9 +1,8 @@
-
-
-cmake_minimum_required(VERSION 3.16)
-
+# https://github.com/meemknight/SFMLCmakeSetup
+cmake_minimum_required(VERSION 3.5...4.0)
+set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
 set(CMAKE_CXX_STANDARD 17)
-
+project(non-linear-regression-SFML)
 #! ! ! ! ! ! !
 #set this to true to ship the game!
 #basically this will change the RESOURCES_PATH to be the local path
@@ -13,7 +12,7 @@ option(PRODUCTION_BUILD "Make this a production build!" OFF)
 #DELETE THE OUT FOLDER AFTER CHANGING THIS BECAUSE VISUAL STUDIO DOESN'T SEEM TO RECOGNIZE THIS CHANGE AND REBUILD!
 
 
-set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Release>:Release>")
+# set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Release>:Release>")
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE) #link time optimization
@@ -28,7 +27,6 @@ if(MSVC)
 add_compile_options(/arch:AVX2) #make sure SIMD optimizations take place
 endif()
 
-project(mygame)
 
 
 
@@ -45,7 +43,13 @@ add_subdirectory(thirdparty/glad)
 file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 
 
-add_executable("${CMAKE_PROJECT_NAME}")
+add_executable("${CMAKE_PROJECT_NAME}" 
+				src/main.cpp 
+				# src/elements.cpp
+				# src/keyControls.cpp
+				src/configuration.hpp
+				# src/gameFunctions.cpp
+				)
 
 set_property(TARGET "${CMAKE_PROJECT_NAME}" PROPERTY CXX_STANDARD 17)
 
@@ -65,6 +69,13 @@ else()
 endif()
 
 target_sources("${CMAKE_PROJECT_NAME}" PRIVATE ${MY_SOURCES} )
+
+add_custom_command(
+    TARGET ${PROJECT_NAME}
+    COMMENT "Copying resources to build directory"
+    PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/res $<TARGET_FILE_DIR:${PROJECT_NAME}>/res
+
+)
 
 
 if(MSVC) # If using the VS compiler...
