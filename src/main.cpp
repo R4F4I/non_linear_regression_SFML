@@ -27,10 +27,14 @@ public:
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "SFML works!");
+	std::cout << "\033[?25l"; // ANSI escape code to hide the cursor
 
 	// fetch data from "data.txt"
 	Pair<float> data[SIZE];
 	load_data_from_file("data.txt", data, SIZE);
+	// fetch parameters from "parameters.txt"
+	float para[PARAMS];
+	load_data_from_file("parameters.txt", para, PARAMS);
 	
 	
 	//? data and parameters defined in configuration.hpp
@@ -54,6 +58,30 @@ int main()
 
 	///////////////////////////////////////////////////////////////////////////////////
 	// main loop
+
+	sf::Font font;
+    if (!font.loadFromFile("res/arial.ttf")) {
+        std::cerr << "Could not load font\n";
+        return 1;
+    }
+    sf::Text text;
+    text.setFont(font);
+    text.setString("press enter to start!\n press escape to exit");
+    text.setCharacterSize(24);
+    text.setFillColor(sf::Color::White);
+    text.setPosition(10, 10);
+
+
+	bool started = false;
+	printf("loss: %f\n",ML::loss_func(para,data));
+	printf("parameters: ");
+	for (size_t i = 0; i < PARAMS; i++) {
+		std::cout << para[i];
+		if (i < PARAMS - 1) {
+			std::cout << ", ";
+		}
+	}
+	printf("\n");
 
 	while 
 	(	window.isOpen() && 
@@ -87,41 +115,55 @@ int main()
 		window.clear();
 		
 
-		
-		// window.draw(point, SIZE, sf::Points);
-		// this works because Point class inherits from sf::Vertex draw supports SFML types only
-		window.draw(reinterpret_cast<sf::Vertex*>(point), SIZE, sf::Points);
-		
-		
-		// debugging info
-		if(print >1000){
-			printf("\nloss: %f",ML::loss_func(para,data));
-			print = 0;
-		}
-		print++;
-
-
-		// define the line to be drawn
-		for (size_t i = 0; i < WIDTH; i++)
+		if (!started)
 		{
-			// Map i to the original data x range
-			float x = min.x + (max.x - min.x) * (float(i) / (WIDTH - EDGE));
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+			{
+				started = true;
+				std::cout << "Started!\n";
+			} else
+			{
+				window.draw(text);
+			}
+		} else
+		{
+			// debugging info
+			if(print >10){
+				printf("loss: %f\n",ML::loss_func(para,data));
+				printf("parameters: ");
+				for (size_t i = 0; i < PARAMS; i++) {
+					std::cout << para[i];
+					if (i < PARAMS - 1) {
+						std::cout << ", ";
+					}
+				}
+				printf("\n");
+				printf("\033[%dA",2); // Move up 2 lines;
+				print = 0;
+			}
+			print++;
+			// define the line to be drawn
+			for (size_t i = 0; i < WIDTH; i++)
+			{
+				// Map i to the original data x range
+				float x = min.x + (max.x - min.x) * (float(i) / (WIDTH - EDGE));
 
-			// Get the function value
-			float y = ML::hypothesis(x, para);
+				// Get the function value
+				float y = ML::hypothesis(x, para);
 
-			// Scale x and y to screen coordinates
-			float scaled_x = ((x - min.x) / (max.x - min.x)) * (WIDTH - EDGE);
-			float scaled_y = HEIGHT - EDGE - ((y - min.y) / (max.y - min.y)) * (HEIGHT - EDGE);
+				// Scale x and y to screen coordinates
+				float scaled_x = ((x - min.x) / (max.x - min.x)) * (WIDTH - EDGE);
+				float scaled_y = HEIGHT - EDGE - ((y - min.y) / (max.y - min.y)) * (HEIGHT - EDGE);
 
-			line[i] = Point(scaled_x, scaled_y,sf::Color::Green);
+				line[i] = Point(scaled_x, scaled_y,sf::Color::Green);
+			}
+			
+			// perform a single step of gradient descent
+			ML::batch_gradient_descent_step(para, data);
+			window.draw(reinterpret_cast<sf::Vertex*>(point), WIDTH, sf::Points);
+			window.draw(reinterpret_cast<sf::Vertex*>(line), WIDTH, sf::Points);
+			
 		}
-
-		// perform a single step of gradient descent
-		ML::batch_gradient_descent_step(para, data);
-		// draw the line
-		window.draw(reinterpret_cast<sf::Vertex*>(line), WIDTH, sf::Points);
-
 
 		window.display();
 	}
@@ -134,6 +176,8 @@ int main()
 		}
 	}
 	std::cout << "]\n\n";
+	write_final_parameters(para,"final_parameters.txt");
+
 
 	return 0;
 }

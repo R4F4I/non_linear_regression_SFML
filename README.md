@@ -1,44 +1,55 @@
-# PLUG AND PLAY SFMLCmakeSetup!
+# non linear regression simulation
+<video controls src="20250625-0941-03.0036260.mp4" title="Title"></video>
 
----
+# about
 
-## What is it?
+- continuation of [regression model in C](https://github.com/R4F4I/non-Linear-Regression-in-C)
+- will show a simulation of the hypothesis fitting the data
+- place the `data.txt` and `parameters.txt` in the same directory as the `.exe`
+- the process will continue estimating parameters until the windows is not closed
+- after closing, the window, the bin will output the finalized parameters at the same path
 
-I already set up an SFML project for you! Take it and enjoy! You don't need to know CMake!
-
-![image](https://github.com/meemknight/SFMLCmakeSetup/assets/36445656/8d4d20b9-6b59-41cc-b2c4-b3c410f78b63)
-
-
-<p>Opening the Solution:</p> 
-
-<img src="https://raw.githubusercontent.com/meemknight/photos/master/llge1.gif" width="350">
-
-Or
-
-<img src="https://raw.githubusercontent.com/meemknight/photos/master/llge2.gif" width="500">
-
-Running the setup
-
-Go to CMakeLists.txt, <kbd>CTRL + S</kbd> to make sure the solution was built.
-
-Then, from this dropdown select mygame.exe
-
-<img src="https://raw.githubusercontent.com/meemknight/photos/master/llge3.gif" width="200">
-
-<kbd>Ctrl + F5</kbd> to build (<kbd>F5</kbd> oppens the debugger, you usually want to press <kbd>Ctrl + F5</kbd> because it oppens faster like this.
-
-<p>Adding files:<br>
-You should add .cpp in src/ and .h in include/ Whenever you add a new file CMake will ask you if you want to add that thing, say NO every time! I am already adding all of the things automatically!
-If you accidentally say YES, just remove that file from the CMake.lists
-</p>
-
-<p>Refreshing your changes:<br>
-After you add a file, the changes should be automatically added but if you want to be sure, you can refresh changes by saving the CMake file. If you want to make a hard refresh (you might have to do that sometimes) close Visual Studio, delete the out folder, reopen VS, <kbd>CTRL + S</kbd> on CMakeLists.txt</p>
+the following data format is to be followed respectively,
 
 
-# IMPORTANT!
-  To ship the game: 
-  In Cmakelists.txt, set the PRODUCTION_BUILD flag to ON to build a shippable version of your game. This will change the file paths to be relative to your exe (RESOURCES_PATH macro), will remove the console, and also will change the asserts to not allow people to debug them. To make sure the changes take effect I recommend deleting the out folder to make a new clean build!
+*data.txt*
+```
+-3.14,0.00
+-2.79,-0.35
+-2.45,-0.64
+-2.11,-0.86
+-1.76,-0.98
+-1.42,-0.99
+-1.07,-0.88
+-0.73,-0.67
+-0.39,-0.38
+-0.04,-0.04
+0.30,0.30
+0.64,0.60
+0.99,0.84
+1.33,0.97
+1.68,0.99
+2.02,0.90
+2.36,0.71
+2.71,0.41
+3.05,0.10
+3.14,0.00
+```
 
+*parameters.txt*
+```
+0
+0
+0.500129
+0
+0
+0
+-6
+-838708
+11.0008
+4.50013
+```
 
-  Also, if you read the CMAKE, even if you don't know CMAKE you should understand what happens with the comments there and you can add libraries and also remove the console from there if you need to! (there is a commented line for that!)
+> [!note]
+> - if the initial parameters presented has a loss greater than 10 the program will instead randomly generate random numbers until it reaches a combination with an error less than 10
+> - this might lead to program being stuck in an indefinite loop, which is why it is better to give the program the estimated parameters manually

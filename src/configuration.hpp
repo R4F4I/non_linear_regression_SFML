@@ -13,13 +13,12 @@
 #define PARAMS 		10
 
 // SFML window constants
-#define WIDTH	   	550
-#define HEIGHT	   	550
+#define WIDTH	   	500
+#define HEIGHT	   	500
 
 // graph constants
 #define EDGE 		100
 
 
-extern float para[PARAMS];
 extern float LOSS;
 

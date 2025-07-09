@@ -11,6 +11,8 @@ public:
 
 
 void load_data_from_file(const char* filename, Pair<float> data[], int size);
+void load_data_from_file(const char* filename, float data[], int size);
+void write_final_parameters(const float* para,const char* filename);
 
 namespace ML{
 

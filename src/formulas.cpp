@@ -28,6 +28,48 @@ void load_data_from_file(const char* filename, Pair<float> data[], int size) {
         std::cerr << "Warning: Only " << i << " data points loaded, expected " << size << std::endl;
     }
 }
+void load_data_from_file(const char* filename,float data[], int size) {
+    std::ifstream infile(filename);
+    if (!infile) {
+        std::cerr << "Could not open data file: " << filename << std::endl;
+        return;
+    }
+    std::string line;
+    int i = 0;
+    while (std::getline(infile, line) && i < size) {
+        std::istringstream iss(line);
+        float x, y;
+        char comma;
+        if (iss >> x) {
+            data[i++] = x;
+        }
+    }
+    if (i < size) {
+        std::cerr << "Warning: Only " << i << " data points loaded, expected " << size << std::endl;
+    }
+}
+
+#include <fstream>
+
+// ...existing code...
+
+void write_final_parameters(const float* para,const char* filename) {
+    std::ofstream outfile(filename);
+    if (outfile.is_open()) {
+        outfile << "Final parameters:\n[";
+        for (size_t i = 0; i < PARAMS; i++) {
+            outfile << para[i];
+            if (i < PARAMS - 1) {
+                outfile << ", ";
+            }
+        }
+        outfile << "]\n";
+        outfile.close();
+    } else {
+        std::cerr << "Could not open file to write final parameters.\n";
+    }
+}
+
 
 
 namespace ML{
