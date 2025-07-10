@@ -9,45 +9,45 @@
 - the process will continue estimating parameters until the windows is not closed
 - after closing, the window, the bin will output the finalized parameters at the same path
 
-the following data format is to be followed respectively,
+the following data format is to be followed respectively, (you can use for a demo)
 
 
 *data.txt*
 ```
--3.14,0.00
--2.79,-0.35
--2.45,-0.64
--2.11,-0.86
--1.76,-0.98
--1.42,-0.99
--1.07,-0.88
--0.73,-0.67
--0.39,-0.38
--0.04,-0.04
-0.30,0.30
-0.64,0.60
-0.99,0.84
-1.33,0.97
-1.68,0.99
-2.02,0.90
-2.36,0.71
-2.71,0.41
-3.05,0.10
-3.14,0.00
+-3.00,9.00
+-2.74,7.50
+-2.47,6.10
+-2.21,4.80
+-1.95,3.60
+-1.68,2.50
+-1.42,1.50
+-1.16,0.60
+-0.89,-0.20
+-0.63,-0.90
+-0.37,-1.50
+-0.10,-2.00
+0.16,-2.40
+0.42,-2.70
+0.68,-2.90
+0.95,-3.00
+1.21,-3.00
+1.47,-2.90
+1.74,-2.70
+2.00,-2.40
 ```
 
 *parameters.txt*
 ```
 0
 0
-0.500129
+-1
+0.12
 0
 0
-0
--6
--838708
-11.0008
-4.50013
+-0.02
+0.723
+-1.48
+-10.04
 ```
 
 > [!note]
