@@ -11,6 +11,7 @@
 
 the following data format is to be followed respectively, (you can use for a demo)
 
+# test Data
 
 *data.txt*
 ```
@@ -53,3 +54,19 @@ the following data format is to be followed respectively, (you can use for a dem
 > [!note]
 > - if the initial parameters presented has a loss greater than 10 the program will instead randomly generate random numbers until it reaches a combination with an error less than 10
 > - this might lead to program being stuck in an indefinite loop, which is why it is better to give the program the estimated parameters manually
+
+
+# building from source
+
+```
+mkdir build
+cd build
+cmake ..
+```
+
+- open `build/non-linear-regression.sln` using `VS`
+- set the folder of same name as `startup project`
+- build
+
+- move to `build/Debug`
+- the bin is there
