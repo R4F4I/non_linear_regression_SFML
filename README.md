@@ -1,5 +1,11 @@
 # non linear regression simulation
-<video controls src="20250625-0941-03.0036260.mp4" title="Title"></video>
+
+
+
+
+https://github.com/user-attachments/assets/9b22fab3-3081-41b1-918c-8c2385a50ce8
+
+
 
 # about
 
